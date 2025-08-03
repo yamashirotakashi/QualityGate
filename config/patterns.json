@@ -1,0 +1,212 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2025-08-02",
+  "CRITICAL": {
+    "security": {
+      "description": "Security-critical patterns that must be blocked",
+      "patterns": {
+        "(sk|pk)_(test|live)_[0-9a-zA-Z]{24,}": "ハードコードされたAPIシークレットが検出されました",
+        "AKIA[0-9A-Z]{16}": "ハードコードされたAWSアクセスキーIDが検出されました",
+        "AIza[0-9A-Za-z\\\\-_]{35}": "ハードコードされたGoogle APIキーが検出されました",
+        "xox[baprs]-[0-9a-zA-Z-]{10,48}": "ハードコードされたSlackトークンが検出されました",
+        "ghp_[0-9a-zA-Z]{36}": "ハードコードされたGitHubパーソナルアクセストークンが検出されました",
+        "ya29\\.[0-9A-Za-z\\\\-_]+": "ハードコードされたGoogle OAuth2トークンが検出されました",
+        "Bearer\\s+[A-Za-z0-9\\\\-_=]+": "ハードコードされたBearerトークンが検出されました"
+      }
+    },
+    "dangerous_operations": {
+      "description": "Operations that could cause system damage",
+      "patterns": {
+        "rm\\s+-rf\\s+/": "危険な再帰的削除コマンドが検出されました",
+        "sudo\\s+rm\\s+-rf": "危険なsudo削除コマンドが検出されました",
+        "DROP\\s+DATABASE": "直接的なデータベース削除操作が検出されました",
+        "DELETE\\s+FROM\\s+\\w+\\s*(?:;|$)": "フィルタなしのDELETE操作が検出されました",
+        "TRUNCATE\\s+TABLE": "直接的なテーブル切り詰め操作が検出されました",
+        "ALTER\\s+TABLE\\s+\\w+\\s+DROP": "直接的なカラム削除操作が検出されました"
+      }
+    },
+    "code_injection": {
+      "description": "Code injection vulnerabilities",
+      "patterns": {
+        "eval\\s*\\(": "直接的なeval()使用が検出されました",
+        "exec\\s*\\(": "直接的なexec()使用が検出されました",
+        "os\\.system\\s*\\(": "直接的なos.system()使用が検出されました",
+        "subprocess\\.call\\s*\\([^)]*shell\\s*=\\s*True": "シェルインジェクション脆弱性が検出されました",
+        "subprocess\\.run\\s*\\([^)]*shell\\s*=\\s*True": "シェルインジェクション脆弱性が検出されました",
+        "execSync\\s*\\(": "直接的なexecSync()使用が検出されました (Node.js)"
+      }
+    },
+    "claude_code_errors": {
+      "description": "Claude Code specific error patterns based on real user reports",
+      "patterns": {
+        "(?i)(no such file or directory|cannot stat|open\\(\\) failed)": "ファイル/ディレクトリが見つかりません。パスの綴りや存在を確認してください",
+        "(?i)FileNotFoundError:.*\\b(['\"]).*\\1": "FileNotFoundError: 指定パスが存在しない可能性があります",
+        "(?i)(Permission denied|EACCES)": "パーミッション不足でファイルを開けません。chmod / chown が必要か確認してください",
+        "FATAL ERROR: Ineffective mark-compacts near heap limit": "Node.js ヒープ不足。--max-old-space-size またはコード最適化を検討してください",
+        "Segmentation fault \\(core dumped\\)": "ネイティブクラッシュ。ポインタ操作や外部 C 拡張のバッファ範囲を確認してください",
+        "(?i)503 Service Unavailable": "Claude Code サービス接続エラー。ネットワーク状況とAnthropicステータスページを確認してください",
+        "(?i)Invalid API key": "APIキー認証失敗。claude config でAPIキーの設定を確認してください",
+        "(?i)Context window full": "コンテキストウィンドウ上限。/clear でセッションリセットまたは /compact で圧縮を実行してください",
+        "(?i)JavaScript heap out of memory": "JSヒープメモリ不足。--max-old-space-size=4096 で増設またはコード最適化を検討してください",
+        "(?i)TypeError.*undefined": "undefined参照エラー。変数初期化・null チェックを確認してください",
+        "(?i)(Credit balance too low|usage limit reached)": "Claude利用制限。subscription状況とcredit残高を確認してください",
+        "(?i)(green-washing.*test|test.*green.?wash)": "テスト改ざんの可能性。実際のテスト実行ログを独立検証してください"
+      }
+    }
+  },
+  "HIGH": {
+    "bandaid_fixes": {
+      "description": "Band-aid fixes that should be flagged",
+      "patterns": {
+        "とりあえず|暫定対応|一時的|仮対応": "バンドエイド修正の可能性が検出されました",
+        "\\b(temporary|temp|quick.?fix|hack|workaround)\\b": "バンドエイド修正の可能性が検出されました",
+        "// ?TODO.*fix.*later": "後回しの修正コメントが検出されました",
+        "# ?FIXME.*later": "後回しの修正コメントが検出されました",
+        "(?i)(mixed|mixing).*\\b(lua|javascript|python|go).*\\b(syntax|language)": "複数言語の構文混在。言語固有ファイルへの分離を検討してください",
+        "(?i)(stuck|stumbl).*(implement|complex).*(simpl|easier)": "実装困難時の安易な簡素化が検出されました。設計を再検討してください",
+        "(?i)(give.?up|abandon).*(feature|advanced).*(complex|difficult)": "複雑な機能の放棄が検出されました。段階的実装を検討してください",
+        "(?i)(difficult|complex).*simpler.*(alternative|approach)": "実装困難による代替案採用が検出されました。元の設計を再検討してください",
+        "(?i)(deadline|tight).*reduce.*scope": "期限制約による機能削減が検出されました。適切なプロジェクト管理を検討してください",
+        "(?i)(cut|remove).*feature.*(deadline|meet)": "期限優先の機能カットが検出されました。品質を保つスケジュール調整を検討してください",
+        "(?i)(reduce|tight).*scope.*(deadline|constraint)": "期限制約によるスコープ削減が検出されました。適切なプロジェクト管理を検討してください"
+      }
+    },
+    "incomplete_todos": {
+      "description": "TODOs without proper context",
+      "patterns": {
+        "TODO(?!\\s*\\([^)]+\\))": "担当者・コンテキストなしのTODOが検出されました",
+        "FIXME(?!\\s*\\([^)]+\\))": "担当者・コンテキストなしのFIXMEが検出されました",
+        "XXX(?!\\s*\\([^)]+\\))": "コンテキストなしのXXXマーカーが検出されました",
+        "HACK(?!\\s*\\([^)]+\\))": "コンテキストなしのHACKマーカーが検出されました"
+      }
+    },
+    "hardcoded_values": {
+      "description": "Hardcoded URLs and configuration values",
+      "patterns": {
+        "localhost:\\d{4,5}": "ハードコードされたlocalhostURLが検出されました",
+        "127\\.0\\.0\\.1:\\d{4,5}": "ハードコードされたlocalhostIPが検出されました",
+        "http://[^/]+\\.(com|org|net|jp)": "ハードコードされた本番URLが検出されました",
+        "https://[^/]+\\.(com|org|net|jp)/[^\"'\\s]+": "ハードコードされた本番HTTPS URLが検出されました",
+        "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}:\\d{4,5}\\b": "ハードコードされたIP:portが検出されました"
+      }
+    },
+    "error_handling": {
+      "description": "Poor error handling patterns",
+      "patterns": {
+        "except\\s*:\\s*pass": "サイレント例外処理が検出されました",
+        "catch\\s*\\(\\s*\\)\\s*\\{": "空のcatchブロックが検出されました",
+        "catch\\s*\\([^)]*\\)\\s*\\{\\s*\\}": "空のcatchブロックが検出されました",
+        "try\\s*\\{[^}]*\\}\\s*catch\\s*\\([^)]*\\)\\s*\\{\\s*\\}": "空のtry-catchが検出されました"
+      }
+    },
+    "git_issues": {
+      "description": "Git operation error patterns",
+      "patterns": {
+        "fatal: not a git repository \\(or any of the parent directories\\)": "現在ディレクトリが Git 管理下にありません。git init または正しいディレクトリへ移動を確認してください",
+        "fatal: repository .*? does not exist": "リモート URL が間違っている、あるいは認証に失敗しています",
+        "fatal: Authentication failed": "認証トークン/SSH Key を確認してください",
+        "CONFLICT \\(content\\): Merge conflict": "マージコンフリクトが発生しました。手動解決後 git add && git commit を実行してください",
+        "error: Your local changes to the following files would be overwritten": "ローカル変更があるため pull/checkout に失敗。stash または commit を検討してください",
+        "(?i)(z.?shell|zsh).*aliases.*break.*bash": "Z-shell aliases がbashコマンドと競合。SHELL=/bin/bash で実行を検討してください",
+        "parse error near.*\\(\\)": "シェル構文エラー。bash互換性またはエスケープ処理を確認してください"
+      }
+    },
+    "dependency_issues": {
+      "description": "Dependency and import error patterns",
+      "patterns": {
+        "ModuleNotFoundError: No module named ['\"][\\w\\.]+": "依存パッケージが未インストールです。pip install または PYTHONPATH を確認してください",
+        "ImportError: cannot import name .*? from .*?": "ライブラリ API 変更の可能性があります。バージョン互換性を確認してください",
+        "npm ERR! 404.*(?:not found|is not in .*registry)": "npm パッケージ名が誤っているか、スコープが非公開です",
+        "go: module .* found \\(.*\\) but does not contain package": "Go モジュール内に対象パッケージがありません。タグ/バージョンを見直してください",
+        "error while loading shared libraries: .*: cannot open shared object file": "動的ライブラリが解決できません。LD_LIBRARY_PATH / rpath を確認してください"
+      }
+    },
+    "incomplete_implementation": {
+      "description": "Incomplete implementation patterns",
+      "patterns": {
+        "raise NotImplementedError": "実装が未完了のメソッドが呼ばれています",
+        "pass\\s*#?\\s*pragma: no cover": "pass 句でロジックが空です。実装を追加してください",
+        "return\\s+None\\s+#\\s+stub": "スタブ実装が返されています。実装を完了してください",
+        "(?i)(lacuna|reduced functionality)": "機能削減・ラクナ実装が検出されました。完全な実装を行ってください",
+        "(?i)(quick.?fix|temporary.?solution).*(until|solve)": "一時的な修正実装が検出されました。根本的な解決を検討してください",
+        "(?i)(disable|skip).*test.*(difficult|complex)": "困難な実装でのテスト無効化が検出されました。実装を完了してからテストを有効化してください",
+        "(?i)(feature|implementation).*reduction.*difficulty": "実装困難による機能削減が検出されました。設計の見直しを検討してください",
+        "(?i)(lower|reduce).*quality.*(complexity|difficult)": "複雑性による品質低下実装が検出されました。品質基準を維持してください",
+        "(?i)(quality.*standard|standard).*reduce": "品質基準の低下が検出されました。適切な品質を維持してください",
+        "(?i)(reduce|lower).*quality.*standard.*(get|something|work)": "動作優先の品質基準低下が検出されました。品質を犠牲にしない解決策を検討してください"
+      }
+    },
+    "context_management": {
+      "description": "Claude Code context and memory management issues",
+      "patterns": {
+        "(?i)(context.?lost|forgot|amnesia)": "コンテキスト喪失の兆候。セッションサマリーやCLAUDE.mdの再確認が必要",
+        "(?i)(compaction|compact).*(break|broke)": "自動圧縮によるコンテキスト破損。手動 /compact を検討してください",
+        "\\b(re-?introduce|regress|back).*bug": "既知のバグの재現。前回修正内容の確認が必要",
+        "(?i)(claude.?md|memory).*ignor": "CLAUDE.md指示無視の可能性。指示の再確認と簡潔化を検討",
+        "(?i)(test.*pass.*never.*ran|claim.*test.*pass)": "テスト実行の虚偽報告。実際のテスト実行ログの確認が必要",
+        "(?i)(hallucinated|fabricated|invented).*reference": "存在しない参照の生成。信頼できるソースでの検証が必要",
+        "(?i)(re-?introduc|reintroduc).*bug": "既知のバグの再現。前回修正内容と変更履歴の確認が必要"
+      }
+    }
+  },
+  "INFO": {
+    "debug_code": {
+      "description": "Debug code that should be removed",
+      "patterns": {
+        "console\\.log": "デバッグ用console.logが検出されました",
+        "print\\s*\\(.*debug": "デバッグ用print文が検出されました",
+        "debugger;": "JavaScriptデバッガ文が検出されました",
+        "pdb\\.set_trace": "Pythonデバッガブレークポイントが検出されました"
+      }
+    },
+    "style_issues": {
+      "description": "Minor style and convention issues",
+      "patterns": {
+        "\\t+": "タブ文字が検出されました（スペースを使用してください）",
+        "\\s+$": "行末の余分なスペースが検出されました",
+        "\\bvar\\b": "JavaScript 'var'の使用が検出されました（let/constを使用してください）"
+      }
+    }
+  },
+  "meta": {
+    "pattern_count": {
+      "CRITICAL": 30,
+      "HIGH": 45,
+      "INFO": 5
+    },
+    "enabled_categories": [
+      "security",
+      "dangerous_operations", 
+      "code_injection",
+      "claude_code_errors",
+      "bandaid_fixes",
+      "incomplete_todos",
+      "hardcoded_values",
+      "error_handling",
+      "git_issues",
+      "dependency_issues", 
+      "incomplete_implementation",
+      "context_management",
+      "debug_code"
+    ],
+    "phase1_focus": [
+      "security",
+      "dangerous_operations",
+      "code_injection"
+    ],
+    "phase3_claude_specific": [
+      "claude_code_errors",
+      "git_issues",
+      "dependency_issues",
+      "incomplete_implementation",
+      "context_management"
+    ],
+    "latest_patterns_update": "2025-08-02T00:00:00Z",
+    "international_sources": [
+      "Reddit r/ClaudeAI community reports",
+      "GitHub anthropics/claude-code issues",
+      "claudelog.com troubleshooting guide",
+      "O3 Search international case studies"
+    ]
+  }
+}

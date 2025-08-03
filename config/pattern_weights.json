@@ -1,0 +1,10 @@
+{
+  "pattern_confidence": {
+    "CRITICAL": 1.0,
+    "HIGH": 0.8,
+    "INFO": 0.6
+  },
+  "learning_rate": 0.01,
+  "performance_threshold_ms": 0.1,
+  "enabled": true
+}

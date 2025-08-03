@@ -1,0 +1,640 @@
+{
+  "project_path": "/mnt/c/Users/tky99/dev/qualitygate",
+  "analysis_timestamp": 1754133765.094576,
+  "metrics": {
+    "total_files": 20,
+    "total_lines": 3889,
+    "total_functions": 114,
+    "total_classes": 15,
+    "average_complexity": 22.4,
+    "complexity_distribution": {},
+    "import_patterns": {},
+    "naming_patterns": {}
+  },
+  "detected_patterns": [
+    {
+      "pattern_type": "naming_convention",
+      "pattern": "snake_case_functions",
+      "confidence": 0.9389473684210526,
+      "frequency": 110,
+      "examples": [
+        "tests/test_phase2_optimization.py",
+        "tests/test_enhanced_pattern_integration.py"
+      ],
+      "suggested_rule": "このプロジェクトではsnake_case関数名が標準です（適用率: 96.5%）"
+    },
+    {
+      "pattern_type": "naming_convention",
+      "pattern": "camel_case_classes",
+      "confidence": 0.9600000000000001,
+      "frequency": 15,
+      "examples": [
+        "scripts/ast_project_analyzer.py",
+        "hooks/unified_quality_hook.py"
+      ],
+      "suggested_rule": "このプロジェクトではCamelCaseクラス名が標準です（適用率: 100.0%）"
+    },
+    {
+      "pattern_type": "import_style",
+      "pattern": "common_import_sys",
+      "confidence": 0.83,
+      "frequency": 17,
+      "examples": [
+        "tests/test_phase2_optimization.py"
+      ],
+      "suggested_rule": "このプロジェクトではsysが標準的に使用されています"
+    },
+    {
+      "pattern_type": "documentation",
+      "pattern": "docstring_usage",
+      "confidence": 0.9,
+      "frequency": 20,
+      "examples": [
+        "hooks/before_bash_qualitygate.py",
+        "hooks/before_edit_qualitygate.py",
+        "hooks/optimized_before_bash.py"
+      ],
+      "suggested_rule": "このプロジェクトではdocstringによる文書化が標準です（適用率: 100.0%）"
+    },
+    {
+      "pattern_type": "error_handling",
+      "pattern": "bare_except_warning",
+      "confidence": 0.8200000000000001,
+      "frequency": 2,
+      "examples": [
+        "hooks/optimized_before_edit.py",
+        "tests/test_blocking_functionality.py"
+      ],
+      "suggested_rule": "bare except文は避けて、具体的な例外タイプを指定してください"
+    }
+  ],
+  "suggested_quality_rules": [
+    {
+      "pattern_id": "snake_case_functions",
+      "severity": "INFO",
+      "pattern": ".*",
+      "message": "このプロジェクトではsnake_case関数名が標準です（適用率: 96.5%）",
+      "category": "naming_convention",
+      "confidence": 0.9389473684210526,
+      "auto_generated": true,
+      "evidence_count": 110
+    },
+    {
+      "pattern_id": "camel_case_classes",
+      "severity": "INFO",
+      "pattern": ".*",
+      "message": "このプロジェクトではCamelCaseクラス名が標準です（適用率: 100.0%）",
+      "category": "naming_convention",
+      "confidence": 0.9600000000000001,
+      "auto_generated": true,
+      "evidence_count": 15
+    },
+    {
+      "pattern_id": "common_import_sys",
+      "severity": "INFO",
+      "pattern": ".*",
+      "message": "このプロジェクトではsysが標準的に使用されています",
+      "category": "import_style",
+      "confidence": 0.83,
+      "auto_generated": true,
+      "evidence_count": 17
+    },
+    {
+      "pattern_id": "docstring_usage",
+      "severity": "INFO",
+      "pattern": ".*",
+      "message": "このプロジェクトではdocstringによる文書化が標準です（適用率: 100.0%）",
+      "category": "documentation",
+      "confidence": 0.9,
+      "auto_generated": true,
+      "evidence_count": 20
+    },
+    {
+      "pattern_id": "bare_except_warning",
+      "severity": "INFO",
+      "pattern": ".*",
+      "message": "bare except文は避けて、具体的な例外タイプを指定してください",
+      "category": "error_handling",
+      "confidence": 0.8200000000000001,
+      "auto_generated": true,
+      "evidence_count": 2
+    }
+  ],
+  "file_analysis_results": {
+    "hooks/before_bash_qualitygate.py": {
+      "file_path": "hooks/before_bash_qualitygate.py",
+      "lines_of_code": 82,
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "imports": [
+        "sys",
+        "os",
+        "time",
+        "pathlib.Path",
+        "severity_analyzer.SeverityAnalyzer",
+        "severity_analyzer.check_bypass_conditions"
+      ],
+      "complexity_score": 8,
+      "naming_issues": []
+    },
+    "hooks/before_edit_qualitygate.py": {
+      "file_path": "hooks/before_edit_qualitygate.py",
+      "lines_of_code": 81,
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "imports": [
+        "sys",
+        "os",
+        "time",
+        "pathlib.Path",
+        "severity_analyzer.SeverityAnalyzer",
+        "severity_analyzer.check_bypass_conditions"
+      ],
+      "complexity_score": 8,
+      "naming_issues": []
+    },
+    "hooks/optimized_before_bash.py": {
+      "file_path": "hooks/optimized_before_bash.py",
+      "lines_of_code": 47,
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "imports": [
+        "sys",
+        "os",
+        "unified_quality_hook.UnifiedQualityHook"
+      ],
+      "complexity_score": 3,
+      "naming_issues": []
+    },
+    "hooks/optimized_before_edit.py": {
+      "file_path": "hooks/optimized_before_edit.py",
+      "lines_of_code": 46,
+      "functions": [
+        "main"
+      ],
+      "classes": [],
+      "imports": [
+        "sys",
+        "os",
+        "unified_quality_hook.UnifiedQualityHook"
+      ],
+      "complexity_score": 4,
+      "naming_issues": []
+    },
+    "hooks/unified_quality_hook.py": {
+      "file_path": "hooks/unified_quality_hook.py",
+      "lines_of_code": 201,
+      "functions": [
+        "__init__",
+        "load_design_config",
+        "should_run_design_analysis",
+        "run_design_analysis",
+        "check_timeout_constraint",
+        "process_input",
+        "main"
+      ],
+      "classes": [
+        "UnifiedQualityHook"
+      ],
+      "imports": [
+        "sys",
+        "os",
+        "re",
+        "subprocess",
+        "json",
+        "time",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.List",
+        "typing.Tuple",
+        "typing.Optional",
+        "optimized_severity_analyzer.OptimizedSeverityAnalyzer"
+      ],
+      "complexity_score": 32,
+      "naming_issues": []
+    },
+    "scripts/ast_project_analyzer.py": {
+      "file_path": "scripts/ast_project_analyzer.py",
+      "lines_of_code": 577,
+      "functions": [
+        "__post_init__",
+        "__post_init__",
+        "__init__",
+        "get_project_hash",
+        "load_cached_analysis",
+        "save_analysis_cache",
+        "analyze_python_file",
+        "detect_code_patterns",
+        "_detect_basic_patterns",
+        "generate_quality_rules",
+        "_generate_regex_for_pattern",
+        "_generate_basic_rules",
+        "analyze_project_async",
+        "analysis_worker",
+        "get_analysis_status",
+        "get_analysis_result",
+        "force_reanalysis",
+        "__init__",
+        "visit_FunctionDef",
+        "visit_ClassDef",
+        "visit_Import",
+        "visit_ImportFrom",
+        "main"
+      ],
+      "classes": [
+        "ProjectMetrics",
+        "CodePattern",
+        "ProjectAnalysisResult",
+        "ASTProjectAnalyzer",
+        "FileASTAnalyzer"
+      ],
+      "imports": [
+        "ast",
+        "os",
+        "sys",
+        "json",
+        "time",
+        "hashlib",
+        "threading",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.List",
+        "typing.Set",
+        "typing.Optional",
+        "typing.Tuple",
+        "typing.Any",
+        "dataclasses.dataclass",
+        "dataclasses.asdict",
+        "collections.defaultdict",
+        "collections.Counter",
+        "concurrent.futures.ThreadPoolExecutor",
+        "concurrent.futures.as_completed",
+        "enhanced_pattern_detector.EnhancedPatternDetector",
+        "enhanced_pattern_detector.EnhancedPatternDetector",
+        "enhanced_pattern_detector.EnhancedCodePattern",
+        "enhanced_pattern_detector.PatternType",
+        "re"
+      ],
+      "complexity_score": 88,
+      "naming_issues": [
+        "Function visit_FunctionDef is not snake_case",
+        "Function visit_ClassDef is not snake_case",
+        "Function visit_Import is not snake_case",
+        "Function visit_ImportFrom is not snake_case"
+      ]
+    },
+    "scripts/enhanced_pattern_detector.py": {
+      "file_path": "scripts/enhanced_pattern_detector.py",
+      "lines_of_code": 676,
+      "functions": [
+        "__post_init__",
+        "__init__",
+        "analyze_project_structure",
+        "detect_naming_patterns",
+        "detect_import_patterns",
+        "detect_code_structure_patterns",
+        "calculate_pattern_quality_score",
+        "enhance_pattern_detection",
+        "analyze_pattern_relationships",
+        "generate_project_specific_rules",
+        "get_detection_statistics",
+        "main"
+      ],
+      "classes": [
+        "PatternType",
+        "EnhancedCodePattern",
+        "ProjectProfile",
+        "EnhancedPatternDetector"
+      ],
+      "imports": [
+        "ast",
+        "re",
+        "json",
+        "time",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.List",
+        "typing.Set",
+        "typing.Optional",
+        "typing.Tuple",
+        "typing.Any",
+        "dataclasses.dataclass",
+        "dataclasses.asdict",
+        "collections.defaultdict",
+        "collections.Counter",
+        "enum.Enum",
+        "statistics"
+      ],
+      "complexity_score": 78,
+      "naming_issues": []
+    },
+    "scripts/optimized_severity_analyzer.py": {
+      "file_path": "scripts/optimized_severity_analyzer.py",
+      "lines_of_code": 226,
+      "functions": [
+        "__init__",
+        "_load_patterns_cached",
+        "_get_default_patterns",
+        "_extract_patterns_by_severity",
+        "analyze_input_optimized",
+        "get_analysis_stats",
+        "clear_all_caches",
+        "main"
+      ],
+      "classes": [
+        "OptimizedSeverityAnalyzer"
+      ],
+      "imports": [
+        "os",
+        "re",
+        "json",
+        "time",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.List",
+        "typing.Tuple",
+        "typing.Optional",
+        "performance_optimizer.get_optimizer"
+      ],
+      "complexity_score": 32,
+      "naming_issues": []
+    },
+    "scripts/performance_optimizer.py": {
+      "file_path": "scripts/performance_optimizer.py",
+      "lines_of_code": 227,
+      "functions": [
+        "__init__",
+        "get_content_hash",
+        "is_likely_safe_content",
+        "compile_patterns_optimized",
+        "fast_pattern_match",
+        "analyze_with_cache",
+        "_get_action_for_severity",
+        "optimize_for_size",
+        "get_performance_stats",
+        "clear_cache",
+        "get_optimizer"
+      ],
+      "classes": [
+        "PerformanceOptimizer"
+      ],
+      "imports": [
+        "re",
+        "time",
+        "hashlib",
+        "json",
+        "typing.Dict",
+        "typing.List",
+        "typing.Tuple",
+        "typing.Optional",
+        "typing.Set",
+        "pathlib.Path"
+      ],
+      "complexity_score": 33,
+      "naming_issues": []
+    },
+    "scripts/qualitygate_status.py": {
+      "file_path": "scripts/qualitygate_status.py",
+      "lines_of_code": 186,
+      "functions": [
+        "check_file_exists",
+        "check_executable",
+        "check_phase_status",
+        "check_pattern_configuration",
+        "check_claude_code_integration",
+        "check_bypass_mechanisms",
+        "show_next_steps",
+        "main"
+      ],
+      "classes": [],
+      "imports": [
+        "os",
+        "sys",
+        "json",
+        "pathlib.Path"
+      ],
+      "complexity_score": 34,
+      "naming_issues": []
+    },
+    "scripts/severity_analyzer.py": {
+      "file_path": "scripts/severity_analyzer.py",
+      "lines_of_code": 215,
+      "functions": [
+        "__init__",
+        "_load_analysis_rules",
+        "_convert_config_to_patterns",
+        "analyze",
+        "should_block",
+        "get_action_for_severity",
+        "check_bypass_conditions",
+        "main"
+      ],
+      "classes": [
+        "SeverityAnalyzer"
+      ],
+      "imports": [
+        "re",
+        "os",
+        "sys",
+        "time",
+        "json",
+        "pathlib.Path",
+        "typing.Dict",
+        "typing.Any",
+        "typing.List",
+        "typing.Optional"
+      ],
+      "complexity_score": 26,
+      "naming_issues": []
+    },
+    "tests/debug_pattern_matching.py": {
+      "file_path": "tests/debug_pattern_matching.py",
+      "lines_of_code": 131,
+      "functions": [
+        "debug_pattern_loading",
+        "debug_direct_pattern_matching",
+        "debug_analyzer_step_by_step",
+        "main"
+      ],
+      "classes": [],
+      "imports": [
+        "sys",
+        "json",
+        "re",
+        "pathlib.Path",
+        "optimized_severity_analyzer.OptimizedSeverityAnalyzer",
+        "performance_optimizer.get_optimizer"
+      ],
+      "complexity_score": 11,
+      "naming_issues": []
+    },
+    "tests/test_blocking_functionality.py": {
+      "file_path": "tests/test_blocking_functionality.py",
+      "lines_of_code": 192,
+      "functions": [
+        "test_critical_patterns",
+        "test_high_patterns",
+        "test_bypass_functionality",
+        "test_hook_integration",
+        "test_performance",
+        "main"
+      ],
+      "classes": [],
+      "imports": [
+        "sys",
+        "os",
+        "subprocess",
+        "tempfile",
+        "pathlib.Path",
+        "severity_analyzer.SeverityAnalyzer",
+        "time"
+      ],
+      "complexity_score": 19,
+      "naming_issues": []
+    },
+    "tests/test_ast_performance_isolation.py": {
+      "file_path": "tests/test_ast_performance_isolation.py",
+      "lines_of_code": 275,
+      "functions": [
+        "__init__",
+        "measure_baseline_performance",
+        "measure_performance_with_ast_background",
+        "measure_memory_footprint",
+        "run_isolation_test",
+        "validate_zero_impact_guarantee",
+        "main"
+      ],
+      "classes": [
+        "PerformanceIsolationTester"
+      ],
+      "imports": [
+        "sys",
+        "time",
+        "threading",
+        "psutil",
+        "os",
+        "pathlib.Path",
+        "optimized_severity_analyzer.OptimizedSeverityAnalyzer",
+        "ast_project_analyzer.ASTProjectAnalyzer"
+      ],
+      "complexity_score": 20,
+      "naming_issues": []
+    },
+    "tests/test_enhanced_pattern_integration.py": {
+      "file_path": "tests/test_enhanced_pattern_integration.py",
+      "lines_of_code": 258,
+      "functions": [
+        "__init__",
+        "test_integration_workflow",
+        "test_pattern_accuracy",
+        "test_rule_generation_accuracy",
+        "test_performance_targets",
+        "generate_integration_report",
+        "main"
+      ],
+      "classes": [
+        "IntegratedPatternTester"
+      ],
+      "imports": [
+        "sys",
+        "json",
+        "time",
+        "pathlib.Path",
+        "ast_project_analyzer.ASTProjectAnalyzer",
+        "enhanced_pattern_detector.EnhancedPatternDetector",
+        "enhanced_pattern_detector.PatternType"
+      ],
+      "complexity_score": 16,
+      "naming_issues": []
+    },
+    "tests/test_high_patterns.py": {
+      "file_path": "tests/test_high_patterns.py",
+      "lines_of_code": 39,
+      "functions": [
+        "test_high_patterns"
+      ],
+      "classes": [],
+      "imports": [
+        "sys",
+        "optimized_severity_analyzer.OptimizedSeverityAnalyzer"
+      ],
+      "complexity_score": 3,
+      "naming_issues": []
+    },
+    "tests/test_info_patterns.py": {
+      "file_path": "tests/test_info_patterns.py",
+      "lines_of_code": 42,
+      "functions": [
+        "test_info_patterns"
+      ],
+      "classes": [],
+      "imports": [
+        "sys",
+        "optimized_severity_analyzer.OptimizedSeverityAnalyzer"
+      ],
+      "complexity_score": 3,
+      "naming_issues": []
+    },
+    "tests/test_optimizer_direct.py": {
+      "file_path": "tests/test_optimizer_direct.py",
+      "lines_of_code": 31,
+      "functions": [
+        "test_direct_matching"
+      ],
+      "classes": [],
+      "imports": [
+        "sys",
+        "performance_optimizer.get_optimizer"
+      ],
+      "complexity_score": 2,
+      "naming_issues": []
+    },
+    "tests/test_phase2_integration.py": {
+      "file_path": "tests/test_phase2_integration.py",
+      "lines_of_code": 137,
+      "functions": [
+        "test_phase2_integration"
+      ],
+      "classes": [],
+      "imports": [
+        "sys",
+        "time",
+        "optimized_severity_analyzer.OptimizedSeverityAnalyzer",
+        "performance_optimizer.get_optimizer"
+      ],
+      "complexity_score": 9,
+      "naming_issues": []
+    },
+    "tests/test_phase2_optimization.py": {
+      "file_path": "tests/test_phase2_optimization.py",
+      "lines_of_code": 220,
+      "functions": [
+        "test_pattern_detection",
+        "test_performance_optimization",
+        "test_unified_hook_system",
+        "test_mcp_conflict_resolution",
+        "main"
+      ],
+      "classes": [],
+      "imports": [
+        "sys",
+        "os",
+        "time",
+        "subprocess",
+        "pathlib.Path",
+        "optimized_severity_analyzer.OptimizedSeverityAnalyzer",
+        "performance_optimizer.get_optimizer",
+        "unified_quality_hook.UnifiedQualityHook",
+        "json"
+      ],
+      "complexity_score": 19,
+      "naming_issues": []
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "test_timestamp": 1754133780.6104314,
+  "overall_status": "PASSED",
+  "workflow": {
+    "status": "SUCCESS",
+    "adaptation_time": 0.5471925735473633,
+    "detected_patterns": 5,
+    "generated_rules": 5,
+    "file_analysis_count": 20,
+    "patterns": [
+      "EnhancedCodePattern(pattern_id='snake_case_functions', pattern_type=<PatternType.NAMING_CONVENTION: 'naming_convention'>, pattern_regex='def\\\\s+[A-Z][a-zA-Z0-9]*\\\\s*\\\\(', confidence_score=0.9389473684210526, frequency=110, evidence_files=['tests/test_enhanced_pattern_integration.py', 'tests/test_phase2_optimization.py'], counter_examples=['visit_FunctionDef', 'visit_ClassDef', 'visit_Import'], suggested_message='このプロジェクトではsnake_case関数名が標準です（適用率: 96.5%）', severity='INFO', auto_fixable=False, related_patterns=['camel_case_classes'])",
+      "EnhancedCodePattern(pattern_id='camel_case_classes', pattern_type=<PatternType.NAMING_CONVENTION: 'naming_convention'>, pattern_regex='class\\\\s+[a-z][a-zA-Z0-9]*\\\\s*[:\\\\(]', confidence_score=0.9600000000000001, frequency=15, evidence_files=['scripts/ast_project_analyzer.py', 'hooks/unified_quality_hook.py'], counter_examples=[], suggested_message='このプロジェクトではCamelCaseクラス名が標準です（適用率: 100.0%）', severity='INFO', auto_fixable=False, related_patterns=['snake_case_functions'])",
+      "EnhancedCodePattern(pattern_id='common_import_sys', pattern_type=<PatternType.IMPORT_STYLE: 'import_style'>, pattern_regex='import\\\\s+(?!sys)', confidence_score=0.83, frequency=17, evidence_files=['tests/test_phase2_optimization.py'], counter_examples=[], suggested_message='このプロジェクトではsysが標準的に使用されています', severity='INFO', auto_fixable=False, related_patterns=[])",
+      "EnhancedCodePattern(pattern_id='docstring_usage', pattern_type=<PatternType.DOCUMENTATION: 'documentation'>, pattern_regex='def\\\\s+\\\\w+[^:]*:\\\\s*$', confidence_score=0.9, frequency=20, evidence_files=['hooks/before_bash_qualitygate.py', 'hooks/before_edit_qualitygate.py', 'hooks/optimized_before_bash.py'], counter_examples=[], suggested_message='このプロジェクトではdocstringによる文書化が標準です（適用率: 100.0%）', severity='INFO', auto_fixable=False, related_patterns=[])",
+      "EnhancedCodePattern(pattern_id='bare_except_warning', pattern_type=<PatternType.ERROR_HANDLING: 'error_handling'>, pattern_regex='except\\\\s*:', confidence_score=0.8200000000000001, frequency=2, evidence_files=['hooks/optimized_before_edit.py', 'tests/test_blocking_functionality.py'], counter_examples=[], suggested_message='bare except文は避けて、具体的な例外タイプを指定してください', severity='HIGH', auto_fixable=False, related_patterns=[])"
+    ],
+    "rules": [
+      {
+        "pattern_id": "snake_case_functions",
+        "severity": "INFO",
+        "pattern": "def\\s+[A-Z][a-zA-Z0-9]*\\s*\\(",
+        "message": "このプロジェクトではsnake_case関数名が標準です（適用率: 96.5%）",
+        "category": "naming_convention",
+        "confidence": 0.9389473684210526,
+        "auto_generated": true,
+        "evidence_count": 110
+      },
+      {
+        "pattern_id": "camel_case_classes",
+        "severity": "INFO",
+        "pattern": "class\\s+[a-z][a-zA-Z0-9]*\\s*[:\\(]",
+        "message": "このプロジェクトではCamelCaseクラス名が標準です（適用率: 100.0%）",
+        "category": "naming_convention",
+        "confidence": 0.9600000000000001,
+        "auto_generated": true,
+        "evidence_count": 15
+      },
+      {
+        "pattern_id": "common_import_sys",
+        "severity": "INFO",
+        "pattern": "import\\s+(?!sys)",
+        "message": "このプロジェクトではsysが標準的に使用されています",
+        "category": "import_style",
+        "confidence": 0.83,
+        "auto_generated": true,
+        "evidence_count": 17
+      },
+      {
+        "pattern_id": "docstring_usage",
+        "severity": "INFO",
+        "pattern": "def\\s+\\w+[^:]*:\\s*$",
+        "message": "このプロジェクトではdocstringによる文書化が標準です（適用率: 100.0%）",
+        "category": "documentation",
+        "confidence": 0.9,
+        "auto_generated": true,
+        "evidence_count": 20
+      },
+      {
+        "pattern_id": "bare_except_warning",
+        "severity": "HIGH",
+        "pattern": "except\\s*:",
+        "message": "bare except文は避けて、具体的な例外タイプを指定してください",
+        "category": "error_handling",
+        "confidence": 0.8200000000000001,
+        "auto_generated": true,
+        "evidence_count": 2
+      }
+    ],
+    "project_profile": "ProjectProfile(project_type='general', primary_frameworks=[], coding_style={'function_naming': 'snake_case', 'class_naming': 'camel_case'}, complexity_level='complex', team_size_indicator='small', maturity_level='development')"
+  },
+  "pattern_accuracy": {
+    "pattern_type_coverage": 0.8,
+    "high_confidence_rate": 1.0,
+    "overall_accuracy": 0.9,
+    "detected_types": [
+      "error_handling",
+      "import_style",
+      "naming_convention",
+      "documentation"
+    ],
+    "high_confidence_count": 5
+  },
+  "rule_generation": {
+    "rule_validity_rate": 1.0,
+    "valid_rules_count": 5,
+    "security_rules_count": 0,
+    "quality_rules_count": 2,
+    "total_rules_generated": 5
+  },
+  "performance_validation": {
+    "all_targets_met": true,
+    "individual_results": {
+      "pattern_detection_accuracy": {
+        "target": 0.85,
+        "actual": 0.9,
+        "passed": true
+      },
+      "rule_generation_accuracy": {
+        "target": 0.8,
+        "actual": 1.0,
+        "passed": true
+      },
+      "adaptation_time": {
+        "target": 3.0,
+        "actual": 0.5471925735473633,
+        "passed": true
+      }
+    }
+  },
+  "project_profile": "ProjectProfile(project_type='general', primary_frameworks=[], coding_style={'function_naming': 'snake_case', 'class_naming': 'camel_case'}, complexity_level='complex', team_size_indicator='small', maturity_level='development')"
+}

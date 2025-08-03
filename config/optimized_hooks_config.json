@@ -1,0 +1,88 @@
+{
+  "hooks": {
+    "pre_tool_use": {
+      "enabled": false,
+      "patterns": ["mcp__*"],
+      "description": "MCP接続時の固まり問題を回避するため無効化（Phase 2 MCP競合対策）"
+    },
+    "before_edit": {
+      "enabled": true,
+      "commands": [
+        {
+          "command": "python /mnt/c/Users/tky99/dev/qualitygate/hooks/optimized_before_edit.py",
+          "timeout": 4500,
+          "description": "QualityGate Phase 2 - 最適化統合品質チェック（編集用）",
+          "environment": {
+            "QUALITYGATE_OPERATION_TYPE": "edit",
+            "QUALITYGATE_MODE": "optimized"
+          }
+        }
+      ],
+      "description": "QualityGate Phase 2統合品質ゲート - 高速最適化版"
+    },
+    "before_bash": {
+      "enabled": true,
+      "commands": [
+        {
+          "command": "python /mnt/c/Users/tky99/dev/qualitygate/hooks/optimized_before_bash.py",
+          "timeout": 4500,
+          "description": "QualityGate Phase 2 - 最適化統合品質チェック（Bash用）",
+          "environment": {
+            "QUALITYGATE_OPERATION_TYPE": "bash",
+            "QUALITYGATE_MODE": "optimized"
+          }
+        }
+      ],
+      "description": "QualityGate Phase 2統合品質ゲート - 高速最適化版"
+    },
+    "user_prompt_submit": {
+      "enabled": true,
+      "commands": [
+        {
+          "command": "python /mnt/c/Users/tky99/dev/vibezen/hooks/shortcut_list_hook.py",
+          "timeout": 1000,
+          "description": "[一覧]コマンドで統合AIワークフローショートカットを表示"
+        }
+      ],
+      "description": "統合AIワークフローショートカット（MCP競合回避済み）"
+    }
+  },
+  "safety": {
+    "enabled": true,
+    "blocked_commands": [
+      "rm -rf /",
+      "sudo rm -rf",
+      "format c:",
+      "curl | sh",
+      "wget | sh"
+    ],
+    "description": "基本セーフティコマンドブロック（QualityGateと併用）"
+  },
+  "performance": {
+    "enabled": true,
+    "timeout_strategy": "fail_fast",
+    "max_hook_time": 4500,
+    "mcp_conflict_avoidance": {
+      "enabled": true,
+      "skip_mcp_patterns": ["mcp__*"],
+      "priority_hooks": ["before_edit", "before_bash"]
+    },
+    "cache": {
+      "enabled": true,
+      "max_entries": 1000,
+      "ttl_seconds": 300
+    }
+  },
+  "qualitygate": {
+    "version": "2.0.0",
+    "mode": "optimized",
+    "features": {
+      "unified_hook_system": true,
+      "performance_optimization": true,
+      "design_protection_integration": true,
+      "mcp_conflict_resolution": true,
+      "advanced_caching": true
+    },
+    "description": "QualityGate Phase 2 - 統合最適化品質ゲートシステム"
+  }
+}
