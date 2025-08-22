@@ -86,6 +86,8 @@ grep "QualityGate" ~/.claude/logs/*.log
 
 ### 重要ファイル
 - `QUALITYGATE_PROJECT.md` - プロジェクト憲章
+- `handover.md` - セッション継続・作業引き継ぎ情報 ⭐ **必読**
+- `TDD_GUARDIAN_DESIGN.md` - TDD Guardian System設計書
 - `scripts/design_protection_hook.py` - 改修対象メインスクリプト
 - `hooks/` - Hook統合スクリプト群
 - `tests/` - テストスイート
