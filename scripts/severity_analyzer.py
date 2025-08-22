@@ -16,7 +16,18 @@ class SeverityAnalyzer:
     """Severity-based pattern analysis for QualityGate"""
     
     def __init__(self):
-        self.config_path = Path("/mnt/c/Users/tky99/dev/qualitygate/config/patterns.json")
+        # Resolve config path with backward-compatible strategy
+        # 1) QUALITYGATE_ROOT env
+        # 2) Relative to this file (../config/patterns.json)
+        # 3) Legacy absolute fallback
+        env_root = os.environ.get("QUALITYGATE_ROOT")
+        if env_root and Path(env_root).exists():
+            base = Path(env_root)
+        else:
+            base = Path(__file__).resolve().parents[1]
+        default_config = base / "config" / "patterns.json"
+        legacy_config = Path("/mnt/c/Users/tky99/dev/qualitygate/config/patterns.json")
+        self.config_path = default_config if default_config.exists() else legacy_config
         self.analysis_rules = self._load_analysis_rules()
         
     def _load_analysis_rules(self) -> Dict[str, Dict]:

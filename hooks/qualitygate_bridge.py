@@ -124,9 +124,18 @@ class QualityGateBridge:
             # Fallback: convert params to string
             return json.dumps(tool_params, indent=2)
     
-    def _execute_qualitygate_hook(self, script_path: Path, hook_input: str) -> Tuple[bool, str]:
+    def _execute_qualitygate_hook(self, script_path: Path, hook_input: str, tool_name: str) -> Tuple[bool, str]:
         """Execute QualityGate hook script and return (should_block, message)."""
         try:
+            # Prepare environment: inject expected hook variables
+            env = os.environ.copy()
+            # Ensure QualityGate root is visible to downstream scripts
+            env.setdefault("QUALITYGATE_ROOT", str(self.qualitygate_root))
+            if tool_name in ["Edit", "Write", "MultiEdit", "NotebookEdit"]:
+                env["CLAUDE_HOOK_MESSAGE"] = hook_input
+            elif tool_name in ["Bash", "BashOutput"]:
+                env["CLAUDE_HOOK_COMMAND"] = hook_input
+
             # Execute the QualityGate hook script
             process = subprocess.Popen(
                 ["python", str(script_path)],
@@ -134,7 +143,8 @@ class QualityGateBridge:
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True,
-                cwd=str(self.qualitygate_root)
+                cwd=str(self.qualitygate_root),
+                env=env
             )
             
             stdout, stderr = process.communicate(input=hook_input, timeout=30)
@@ -142,8 +152,8 @@ class QualityGateBridge:
             if process.returncode == 0:
                 logger.info(f"QualityGate hook passed: {script_path.name}")
                 return False, "QualityGate: Analysis passed"
-            elif process.returncode == 1:
-                # Quality issue detected, should block
+            elif process.returncode in (1, 2):
+                # Quality issue detected, should block (2 is CRITICAL per analyzer)
                 logger.warning(f"QualityGate hook blocked: {script_path.name}")
                 error_message = stderr.strip() or stdout.strip() or "Quality issue detected"
                 return True, f"🚨 QualityGate Block: {error_message}"
@@ -197,7 +207,7 @@ class QualityGateBridge:
             }
         
         # Execute QualityGate hook
-        should_block, message = self._execute_qualitygate_hook(hook_script, hook_input)
+        should_block, message = self._execute_qualitygate_hook(hook_script, hook_input, tool_name)
         
         result = {
             "status": "blocked" if should_block else "passed",
