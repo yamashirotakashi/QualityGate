@@ -55,10 +55,38 @@ class AuthenticationManager:
     def _get_secret_key(self) -> str:
         """JWT署名キー取得"""
         import os
-        secret = os.getenv("QG_JWT_SECRET", "qualitygate-enterprise-secret-key-change-in-production")
+        import secrets
         
-        if secret == "qualitygate-enterprise-secret-key-change-in-production":
-            print("⚠️ WARNING: Using default JWT secret key. Change QG_JWT_SECRET in production!")
+        secret = os.getenv("QG_JWT_SECRET")
+        
+        if not secret:
+            raise ValueError(
+                "QG_JWT_SECRET environment variable is required for JWT authentication. "
+                "Generate a strong secret key using: python -c \"import secrets; print(secrets.token_urlsafe(32))\""
+            )
+        
+        # 最小セキュリティ要件チェック
+        if len(secret) < 32:
+            raise ValueError(
+                "QG_JWT_SECRET must be at least 32 characters long for security. "
+                "Generate a strong secret key using: python -c \"import secrets; print(secrets.token_urlsafe(32))\""
+            )
+        
+        # 危険なデフォルト値のチェック
+        dangerous_defaults = [
+            "qualitygate-enterprise-secret-key-change-in-production",
+            "your-secret-key",
+            "secret",
+            "jwt-secret",
+            "change-me"
+        ]
+        
+        if secret.lower() in [d.lower() for d in dangerous_defaults]:
+            raise ValueError(
+                f"Dangerous default JWT secret detected: '{secret}'. "
+                "Use a cryptographically secure random key. "
+                "Generate one using: python -c \"import secrets; print(secrets.token_urlsafe(32))\""
+            )
         
         return secret
     

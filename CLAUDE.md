@@ -78,7 +78,7 @@ grep "QualityGate" ~/.claude/logs/*.log
 ```
 
 ### 作業フロー
-1. `[QGate]` でプロジェクト切り替え
+1. `[QGate]` でプロジェクト切り替え → handover.md自動読み込み
 2. フェーズ状況確認
 3. 実装・テスト・検証
 4. フェーズ進行の判断
@@ -86,7 +86,7 @@ grep "QualityGate" ~/.claude/logs/*.log
 
 ### 重要ファイル
 - `QUALITYGATE_PROJECT.md` - プロジェクト憲章
-- `handover.md` - セッション継続・作業引き継ぎ情報 ⭐ **必読**
+- `handover.md` - セッション継続・作業引き継ぎ情報 ⭐ **必読** (最終更新: 2025-08-22 Phase 0.5完了)
 - `TDD_GUARDIAN_DESIGN.md` - TDD Guardian System設計書
 - `scripts/design_protection_hook.py` - 改修対象メインスクリプト
 - `hooks/` - Hook統合スクリプト群

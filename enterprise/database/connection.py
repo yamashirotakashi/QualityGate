@@ -18,6 +18,9 @@ from sqlalchemy.pool import StaticPool
 from enterprise.database.models import Base, create_sample_data
 
 
+# 追加のSQLAlchemy import (セキュリティ修正用)
+from sqlalchemy.sql import func, select
+
 class DatabaseManager:
     """データベース接続管理"""
     
@@ -226,14 +229,29 @@ class DatabaseManager:
                 "tables": []
             }
             
-            # テーブル統計
+            # セキュリティ修正: テーブル名の許可リストによる検証
+            allowed_tables = {
+                "tenants": "tenants",
+                "users": "users", 
+                "webhooks": "webhooks",
+                "quality_metrics": "quality_metrics"
+            }
+            
+            # テーブル統計（安全な実装）
             async with self.AsyncSessionLocal() as session:
-                for table_name in ["tenants", "users", "webhooks", "quality_metrics"]:
+                for table_key in allowed_tables.keys():
+                    table_name = allowed_tables[table_key]  # 許可されたテーブル名のみ使用
                     try:
-                        result = await session.execute(text(f"SELECT COUNT(*) FROM {table_name}"))
-                        count = result.scalar()
-                        stats["tables"].append({"name": table_name, "count": count})
-                    except:
+                        # SQLAlchemy のメタデータから安全にテーブル参照
+                        if hasattr(Base.metadata.tables, table_name):
+                            table_obj = Base.metadata.tables[table_name]
+                            result = await session.execute(select(func.count()).select_from(table_obj))
+                            count = result.scalar()
+                            stats["tables"].append({"name": table_name, "count": count})
+                        else:
+                            # テーブルが存在しない場合の安全な処理
+                            stats["tables"].append({"name": table_name, "count": "N/A"})
+                    except Exception:
                         stats["tables"].append({"name": table_name, "count": "N/A"})
             
             return stats

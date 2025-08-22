@@ -1,0 +1,16 @@
+# QualityGate specific excludes
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.coverage
+htmlcov/
+.pytest_cache/
+.serena/cache/
+tests/__pycache__/
+*.pkl
+.qualitygate_cache/
+.quality_reports/
+qualitygate_env/
+*.tar.gz
